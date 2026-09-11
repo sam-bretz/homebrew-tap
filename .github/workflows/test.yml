@@ -1,0 +1,32 @@
+# Install and test the formula from this commit on fresh macOS and Linux.
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install and test envctl from this tap
+        run: |
+          set -euo pipefail
+          if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          fi
+          brew tap sam-bretz/tap "$GITHUB_WORKSPACE"
+          brew install sam-bretz/tap/envctl
+          brew test sam-bretz/tap/envctl
+          envctl --version
+          command -v envctl-worktree-create envctl-worktree-remove
