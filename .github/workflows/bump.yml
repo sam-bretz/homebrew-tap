@@ -1,0 +1,38 @@
+# Keep Formula/envctl.rb on envctl's latest release. envctl's releases are
+# public, so this needs only this repository's own token.
+name: bump
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render formula for the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=$(gh release view -R sam-bretz/envctl --json tagName -q .tagName)
+          [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "unexpected release tag: $tag" >&2; exit 1; }
+          current=$(sed -n 's/^  version "\(.*\)"$/\1/p' Formula/envctl.rb)
+          if [ "${tag#v}" = "$current" ]; then
+            echo "Formula already at $tag"
+            exit 0
+          fi
+          gh release download "$tag" -R sam-bretz/envctl -p checksums.txt -O checksums.txt
+          ./render-formula.sh "$tag" checksums.txt > Formula/envctl.rb.new
+          mv Formula/envctl.rb.new Formula/envctl.rb
+          rm checksums.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/envctl.rb
+          git commit -m "envctl ${tag#v}"
+          git push
