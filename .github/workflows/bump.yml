@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   bump:
@@ -36,3 +37,6 @@ jobs:
           git add Formula/envctl.rb
           git commit -m "envctl ${tag#v}"
           git push
+          # Pushes made with this token do not trigger other workflows, so
+          # start the install test for the new formula explicitly.
+          gh workflow run test.yml --ref main
