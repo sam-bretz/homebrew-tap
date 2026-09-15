@@ -1,27 +1,27 @@
 class Envctl < Formula
   desc "Isolated Compose environments per branch and checkpointed agent workflows"
   homepage "https://github.com/sam-bretz/envctl"
-  version "0.4.7"
+  version "0.4.8"
 
   on_macos do
     on_arm do
-      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.7/envctl_darwin_arm64.tar.gz"
-      sha256 "5bda8f5b1f6b7cf22ca86412f995e6350714cbd8fef1bb748a8efaac96c865d9"
+      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.8/envctl_darwin_arm64.tar.gz"
+      sha256 "d1fa551c3362c9b452e572373c5d5e1dc125de070a69595803b87464fd3a3657"
     end
     on_intel do
-      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.7/envctl_darwin_amd64.tar.gz"
-      sha256 "477806bfdb6b3995f063a55da0ba7f6b0dfa0522a6593fdf3fa1d06388a94f48"
+      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.8/envctl_darwin_amd64.tar.gz"
+      sha256 "d06074bc8524ee9cbad591fd39e2a07151850087271ec0c2f216c5374ef50fff"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.7/envctl_linux_arm64.tar.gz"
-      sha256 "ba7f7214d939b3e4ec87de03092d9c1e2e0bbbdfced23693d065b56faa2fd33a"
+      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.8/envctl_linux_arm64.tar.gz"
+      sha256 "de1b1085ad56409f61e31d8f8dee54e1e50a81ac89e9cfe05978d179bf297d24"
     end
     on_intel do
-      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.7/envctl_linux_amd64.tar.gz"
-      sha256 "9c6230cb7ee97151588b0a9ab02c7354261cf03c59efbc52221f2f7fd419d57a"
+      url "https://github.com/sam-bretz/envctl/releases/download/v0.4.8/envctl_linux_amd64.tar.gz"
+      sha256 "28dc9f2adebc67fe2028d6051f774b248f061d0b3a09e48541aa7be3841969f4"
     end
   end
 
